@@ -1,4 +1,4 @@
-const bcryptjs = require("bcryptjs");
+
 const express = require("express");
 const req = require("express/lib/request");
 const server = require("./src/server");

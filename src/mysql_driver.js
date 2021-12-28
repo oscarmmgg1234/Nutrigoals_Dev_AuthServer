@@ -1,7 +1,8 @@
 
 const mysql = require('mysql');
 const {createID, password_hash_rounds} = require('./utils')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const res = require('express/lib/response');
 
 
 module.exports = class DB{
@@ -27,13 +28,13 @@ module.exports = class DB{
         ,(err, result)=>{if(err === null){return callback(true)}else{return callback(false)}})})
     }
 
-    loginUser(JSONObject, callback){
+     loginUser(JSONObject, callback){
         if(JSONObject.username.includes('@')){//email
-            this.db.query("SELECT user_password FROM users WHERE user_email = (?)", [JSONObject.username],(err, result)=>{
+            this.db.query("SELECT user_password, user_id, user_email FROM users WHERE user_email = (?)", [JSONObject.username],(err, result)=>{
                 if(err !== null){console.log(err);return (callback({valid: false}))}
                 else if(result.length > 0){
                     bcrypt.compare(JSONObject.password, result[0].user_password, (err, results)=>{if(err !== null){console.log(err);return callback({valid: false})}
-                else if(results){return callback({valid: true})}else{return callback({valid: false})}})
+                else if(results){return callback({valid: true, username: result[0].user_email,password: result[0].user_password, user_id: result[0].user_id })}else{return callback({valid: false})}})
                 }
                 else{return callback({valid: false})}
             })
@@ -44,7 +45,7 @@ module.exports = class DB{
                 else if(result.length > 0){
                     
                     bcrypt.compare(JSONObject.password, result[0].user_password, (err, results)=>{if(err !== null){console.log(err);return callback({valid: false})}
-                else if(results){return callback({valid: true})}else{return callback({valid: false})}})
+                else if(results){return callback({valid: true, username: result[0].user_username,password: result[0].user_password, user_id: result[0].user_id })}else{return callback({valid: false})}})
                 }
                 else{return callback({valid: false})}
             })

@@ -19,10 +19,6 @@ api.post("/loginUser", (req, res) => {
 			Server.loginUser(userOBJ, (response)=>{res.send({valid: response.valid}); if(response.valid === true){Server.signInUserWith(response);}})
 });
 
-api.get("/checkLogin", (req, res) =>{
-		Server.checkSignIn(req.body.username, (obj)=>{res.send(obj); console.log(obj.valid)})
-})
-
 api.listen(listening_port, () => {
 			  console.log(`running server on port ${listening_port}`);
 });

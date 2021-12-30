@@ -34,6 +34,7 @@ api.post("/loginUser", (req, res) => {
     { username: req.body.username, user_id: req.body.user_id },
     (result) => {
       if (result.length > 0 && result[0] !== undefined) {
+        console.log("cache hit");
         res.send(result[0]);
       } else {
         const userOBJ = {

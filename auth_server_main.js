@@ -29,7 +29,6 @@ api.post("/registerUser", (req, res) => {
 });
 
 api.post("/loginUser", (req, res) => {
-  console.log(req.body);
   //search for user in
   Server.SignInUserWithManager(
     { username: req.body.username, user_id: req.body.user_id },

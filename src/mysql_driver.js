@@ -19,6 +19,11 @@ module.exports = class DB {
     });
   }
 
+  uploadImage(JSONObject, callback) {
+    let query = `UPDATE users SET profile_image = ${JSONObject.image} WHERE user_id = ${JSONObject.userID}`
+    this.db.query(query, (err, res) => { if (err !== null) { return callback(res) } else { throw err } })
+  }
+
   registerUser(JSONObject, callback) {
     let database = this.db;
     bcrypt.hash(
@@ -50,7 +55,7 @@ module.exports = class DB {
     if (JSONObject.username.includes("@")) {
       //email
       this.db.query(
-        "SELECT user_password, user_id, user_email FROM users WHERE user_email = (?)",
+        "SELECT * FROM users WHERE user_email = (?)",
         [JSONObject.username],
         (err, result) => {
           if (err !== null) {
@@ -67,9 +72,16 @@ module.exports = class DB {
                 } else if (results) {
                   return callback({
                     valid: true,
-                    username: result[0].user_email,
+                    username: result[0].user_username,
+                    email: result[0].user_email,
                     password: result[0].user_password,
                     user_id: result[0].user_id,
+                    fullname: result[0].user_fullname,
+                    image: result[0].profile_image,
+                    gender: result[0].user_gender,
+                    age: result[0].user_age,
+                    weight: result[0].user_weight,
+                    height: result[0].user_height,
                   });
                 } else {
                   return callback({ valid: false });
@@ -102,8 +114,15 @@ module.exports = class DB {
                   return callback({
                     valid: true,
                     username: result[0].user_username,
+                    email: result[0].user_email,
                     password: result[0].user_password,
                     user_id: result[0].user_id,
+                    fullname: result[0].user_fullname,
+                    image: result[0].profile_image,
+                    gender: result[0].user_gender,
+                    age: result[0].user_age,
+                    weight: result[0].user_weight,
+                    height: result[0].user_height,
                   });
                 } else {
                   return callback({ valid: false });

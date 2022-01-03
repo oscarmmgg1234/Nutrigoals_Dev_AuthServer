@@ -57,6 +57,9 @@ api.post("/signOutUser", (req, res) => {
   Server.SignOutUserWithManager(req.body.user_id);
 });
 
+api.post('/uploadImage', (req, res) => {
+  Server.uploadImage({ userID: req.body.userID, image: req.body.image }, (result) => { res.send(result)})
+})
 api.listen(listening_port, () => {
   console.log(`running server on port ${listening_port}`);
 });

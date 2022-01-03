@@ -28,7 +28,6 @@ api.post("/registerUser", (req, res) => {
 });
 
 api.post("/loginUser", (req, res) => {
-  console.log(req.body.username)
   //search for user in
   Server.SignInUserWithManager(
     { username: req.body.username, user_id: req.body.user_id },
@@ -58,7 +57,7 @@ api.post("/signOutUser", (req, res) => {
 });
 
 api.post('/uploadImage', (req, res) => {
-  Server.uploadImage({ userID: req.body.userID, image: req.body.image }, (result) => { res.send(result)})
+  Server.uploadImage({ userID: req.body.user_id, image: req.body.image }, (result) => { res.send(result)})
 })
 api.listen(listening_port, () => {
   console.log(`running server on port ${listening_port}`);

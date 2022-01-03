@@ -1,5 +1,5 @@
 const mysql = require("mysql");
-const { createID, password_hash_rounds } = require("./utils");
+const { createID, password_hash_rounds, status } = require("./utils");
 const bcrypt = require("bcryptjs");
 
 module.exports = class DB {
@@ -20,8 +20,8 @@ module.exports = class DB {
   }
 
   uploadImage(JSONObject, callback) {
-    let query = `UPDATE users SET profile_image = ${JSONObject.image} WHERE user_id = ${JSONObject.userID}`;
-    this.db.query(query, (err, res) => { if (err !== null) { return callback(res) } else { throw err } });
+    let query = `UPDATE users SET profile_image ='${JSONObject.image}' WHERE user_id = '${JSONObject.userID}'`;
+    this.db.query(query, (err, res) => { if (err === null) { return callback(status.success) } else { throw err } });
   }
 
   registerUser(JSONObject, callback) {

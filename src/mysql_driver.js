@@ -20,12 +20,12 @@ module.exports = class DB {
   }
 
   uploadImage(JSONObject, callback) {
-    let query = `UPDATE users SET profile_image = ${JSONObject.image} WHERE user_id = ${JSONObject.userID}`
-    this.db.query(query, (err, res) => { if (err !== null) { return callback(res) } else { throw err } })
+    let query = `UPDATE users SET profile_image = ${JSONObject.image} WHERE user_id = ${JSONObject.userID}`;
+    this.db.query(query, (err, res) => { if (err !== null) { return callback(res) } else { throw err } });
   }
 
   registerUser(JSONObject, callback) {
-    let database = this.db;
+    let database = this.db
     bcrypt.hash(
       JSONObject.password,
       password_hash_rounds,
@@ -74,7 +74,6 @@ module.exports = class DB {
                     valid: true,
                     username: result[0].user_username,
                     email: result[0].user_email,
-                    password: result[0].user_password,
                     user_id: result[0].user_id,
                     fullname: result[0].user_fullname,
                     image: result[0].profile_image,
@@ -96,7 +95,7 @@ module.exports = class DB {
     } else {
       //username
       this.db.query(
-        "SELECT user_password, user_id, user_username  FROM nutrigoalsDB.users WHERE user_username = (?)",
+        "SELECT * FROM users WHERE user_username = (?)",
         [JSONObject.username],
         (err, result) => {
           if (err !== null) {
@@ -115,7 +114,6 @@ module.exports = class DB {
                     valid: true,
                     username: result[0].user_username,
                     email: result[0].user_email,
-                    password: result[0].user_password,
                     user_id: result[0].user_id,
                     fullname: result[0].user_fullname,
                     image: result[0].profile_image,

@@ -1,8 +1,7 @@
 
 const express = require("express");
-const req = require("express/lib/request");
 const server = require("./src/server");
-const { listening_port, status, password_hash_rounds } = require("./src/utils");
+const { listening_port, status} = require("./src/utils");
 
 const api = express();
 const Server = new server();
@@ -29,12 +28,13 @@ api.post("/registerUser", (req, res) => {
 });
 
 api.post("/loginUser", (req, res) => {
+  console.log(req.body.username)
   //search for user in
   Server.SignInUserWithManager(
     { username: req.body.username, user_id: req.body.user_id },
     (result) => {
       if (result.length > 0 && result[0] !== undefined) {
-        res.send(result[0]);
+        res.send(result[0]); 
       } else {
         const userOBJ = {
           username: req.body.username,

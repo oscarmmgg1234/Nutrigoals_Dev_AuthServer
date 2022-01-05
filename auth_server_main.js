@@ -28,7 +28,8 @@ api.post("/registerUser", (req, res) => {
 });
 
 api.post("/loginUser", (req, res) => {
-  //search for user in
+  if(req.body.username && req.body.password ){
+  //search for user in usermanager
   Server.SignInUserWithManager(
     { username: req.body.username, user_id: req.body.user_id },
     (result) => {
@@ -50,6 +51,11 @@ api.post("/loginUser", (req, res) => {
       }
     }
   );
+  }
+  else{
+    
+    res.send(status.invalidUserOBJ)
+  }
 });
 
 api.post("/signOutUser", (req, res) => {

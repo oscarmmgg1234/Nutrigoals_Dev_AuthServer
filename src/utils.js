@@ -7,6 +7,7 @@ const status = {
   success: "success",
   error: "error",
   failed: { valid: false },
+  invalidUserOBJ: { error: "invalid user object"}
 };
 function createID() {
   return uuidv4();

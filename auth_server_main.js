@@ -7,7 +7,7 @@ const api = express();
 const Server = new server();
 
 Server.connect();
-api.use(express.json());
+api.use(express.json({limit: "20mb"}));
 
 Server.refreshServerUserArray();
 

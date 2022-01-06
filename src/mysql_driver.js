@@ -31,13 +31,17 @@ module.exports = class DB {
       password_hash_rounds,
       function (err, hash) {
         database.query(
-          "INSERT INTO users (user_id, user_fullname, user_email, user_password, user_username) VALUES (?,?,?,?,?)",
+          "INSERT INTO users (user_id, user_fullname, user_email, user_password, user_username, user_gender, user_age, user_weight, user_height) VALUES (?,?,?,?,?,?,?,?,?)",
           [
             createID(),
             JSONObject.fullname,
             JSONObject.email,
             hash,
             JSONObject.username,
+            JSONObject.gender,
+            JSONObject.user_age,
+            JSONObject.user_weight,
+            JSONObject.user_height
           ],
           (err, result) => {
             if (err === null) {

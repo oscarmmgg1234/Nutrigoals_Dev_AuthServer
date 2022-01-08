@@ -83,7 +83,7 @@ api.post('/uploadImage', (req, res) => {
 })
 
 api.post('/updateUserAccountInfo', (req,res)=>{
-  Server.updateUserInfo(req.body, (result)=>{res.send(result)})
+  Server.updateUserInfo({index: req.body.index, payload: req.body.payload, userID: req.body.userID}, (result)=>{res.send(result)})
 })
 api.listen(listening_port, () => {
   console.log(`running server on port ${listening_port}`);

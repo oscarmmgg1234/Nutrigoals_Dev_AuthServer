@@ -17,10 +17,10 @@ module.exports = class DB {
   connect() {
     this.columnName.set(1, "user_fullname");
     this.columnName.set(2, "user_email");
-    this.columnName.set(3, "user_age");
+    this.columnName.set(6, "user_age");
     this.columnName.set(4, "user_weight");
     this.columnName.set(5, "user_physical_level");
-    this.columnName.set(6, "user_gender");
+    this.columnName.set(3, "user_gender");
     this.columnName.set(7, "user_height");
     this.db.connect((err) => {
       if (err !== null) throw err;
@@ -28,7 +28,13 @@ module.exports = class DB {
   }
 
   updateUserInfo(JSONObject, callback){
-    let query = `UPDATE users SET ${this.columnName.get(JSONObject.index)} = ${JSONObject.payload} WHERE user_id = ${JSONObject.userID}` 
+    let query = "";
+    if(JSONObject.index > 3){
+    query = `UPDATE users SET ${this.columnName.get(JSONObject.index)} = ${JSONObject.payload} WHERE user_id = '${JSONObject.userID}'`; 
+    }
+    else{
+      query = `UPDATE users SET ${this.columnName.get(JSONObject.index)} = '${JSONObject.payload}' WHERE user_id = '${JSONObject.userID}'`;
+    }
     this.db.query(query, (err, res) => { if (err === null) { return callback(status.success) } else { throw err } })
 
   }

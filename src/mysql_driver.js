@@ -28,7 +28,7 @@ module.exports = class DB {
   }
 
   updateUserInfo(JSONObject, callback){
-    let query = `UPDATE users SET ${this.columnName.get(JSONObject.index)} = ${JSONObject.payload} WHERE user_id = '${JSONObject.userID}'` 
+    let query = `UPDATE users SET ${this.columnName.get(JSONObject.index)} = ${JSONObject.payload} WHERE user_id = ${JSONObject.userID}` 
     this.db.query(query, (err, res) => { if (err === null) { return callback(status.success) } else { throw err } })
 
   }

@@ -28,7 +28,8 @@ module.exports = class DB {
   }
 
   updateUserInfo(JSONObject, callback){
-    this.db.query("UPDATE users SET (?) = (?) WHERE user_id = (?)",[this.columnName.get(JSONObject.index), JSONObject.payload, JSONObject.userID ], (err, res) => { if (err === null) { return callback(status.success) } else { throw err } })
+    let query = `UPDATE users SET ${this.columnName.get(JSONObject.index)} = ${JSONObject.payload} WHERE user_id = '${JSONObject.userID}'` 
+    this.db.query(query, (err, res) => { if (err === null) { return callback(status.success) } else { throw err } })
 
   }
   uploadImage(JSONObject, callback) {

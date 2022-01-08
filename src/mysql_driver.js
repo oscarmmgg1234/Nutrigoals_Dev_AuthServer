@@ -31,7 +31,7 @@ module.exports = class DB {
       password_hash_rounds,
       function (err, hash) {
         database.query(
-          "INSERT INTO users (user_id, user_fullname, user_email, user_password, user_username, user_gender, user_age, user_weight, user_height) VALUES (?,?,?,?,?,?,?,?,?)",
+          "INSERT INTO users (user_id, user_fullname, user_email, user_password, user_username, user_gender, user_age, user_weight, user_height, user_physical_level, user_weightLossGoal) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
           [
             createID(),
             JSONObject.fullname,
@@ -41,7 +41,9 @@ module.exports = class DB {
             JSONObject.gender,
             JSONObject.user_age,
             JSONObject.user_weight,
-            JSONObject.user_height
+            JSONObject.user_height,
+            JSONObject.fitnessLevel,
+            JSONObject.weeklyLossGoal,
           ],
           (err, result) => {
             if (err === null) {
@@ -85,6 +87,8 @@ module.exports = class DB {
                     age: result[0].user_age,
                     weight: result[0].user_weight,
                     height: result[0].user_height,
+                    fitnessLevel: result[0].user_physical_level,
+                    weeklyLossGoal: result[0].user_weightLossGoal,
                   });
                 } else {
                   return callback({ valid: false });
@@ -125,6 +129,8 @@ module.exports = class DB {
                     age: result[0].user_age,
                     weight: result[0].user_weight,
                     height: result[0].user_height,
+                    fitnessLevel: result[0].user_physical_level,
+                    weeklyLossGoal: result[0].user_weightLossGoal,
                   });
                 } else {
                   return callback({ valid: false });

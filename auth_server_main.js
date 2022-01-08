@@ -12,9 +12,8 @@ api.use(express.json({ limit: "20mb" }));
 Server.refreshServerUserArray();
 
 api.post("/registerUser", (req, res) => {
-  console.log(req.body)
   //check if request userObject is valid
-  if (req.body.username && req.body.email && req.body.password && req.body.gender && req.body.weight && req.body.height && req.body.age, req.body.name) {
+  if (req.body.username && req.body.email && req.body.password && req.body.gender && req.body.weight && req.body.height && req.body.age && req.body.name && req.body.fitnessLevel && req.body.weeklyLossGoal) {
     const userOBJ = {
       fullname: req.body.name,
       email: req.body.email,
@@ -24,6 +23,8 @@ api.post("/registerUser", (req, res) => {
       user_age: req.body.age,
       user_weight: req.body.weight,
       user_height: req.body.height,
+      fitnessLevel: req.body.fitnessLevel,
+      weeklyLossGoal: req.body.weeklyLossGoal,
     };
     //register user
     Server.registerUser(userOBJ, (result) => {
@@ -35,6 +36,7 @@ api.post("/registerUser", (req, res) => {
     });
   }
   else {
+  
     res.send(status.failed)
   }
 });

@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 
 module.exports = class DB {
   constructor() {
+    this.columnName = new Map()
     this.db = mysql.createConnection({
       user: "admin",
       host: "db.ca1tiucmqwpl.us-west-2.rds.amazonaws.com",
@@ -14,11 +15,22 @@ module.exports = class DB {
   }
 
   connect() {
+    this.columnName.set(1, "user_fullname");
+    this.columnName.set(2, "user_email");
+    this.columnName.set(3, "user_age");
+    this.columnName.set(4, "user_weight");
+    this.columnName.set(5, "user_physical_level");
+    this.columnName.set(6, "user_gender");
+    this.columnName.set(7, "user_height");
     this.db.connect((err) => {
       if (err !== null) throw err;
     });
   }
 
+  updateUserInfo(JSONObject, callback){
+    this.db.query('UPDATE users SET (?) = (?) WHERE user_id = (?)',[JSONObject.index, JSONObject.payload, JSONObject.userID ], (err, res) => { if (err === null) { return callback(status.success) } else { throw err } })
+
+  }
   uploadImage(JSONObject, callback) {
     let query = `UPDATE users SET profile_image ='${JSONObject.image}' WHERE user_id = '${JSONObject.userID}'`;
     this.db.query(query, (err, res) => { if (err === null) { return callback(status.success) } else { throw err } });

@@ -81,6 +81,10 @@ api.post("/signOutUser", (req, res) => {
 api.post('/uploadImage', (req, res) => {
   Server.uploadImage({ userID: req.body.user_id, image: req.body.image }, (result) => { res.send(result) })
 })
+
+api.post('/updateUserAccountInfo', (req,res)=>{
+  Server.updateUserInfo(req.body, (result)=>{res.send(result)})
+})
 api.listen(listening_port, () => {
   console.log(`running server on port ${listening_port}`);
 });

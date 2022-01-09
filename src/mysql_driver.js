@@ -93,7 +93,6 @@ module.exports = class DB {
             if (err === null) {
               return callback(true);
             } else {
-              console.log(err);
               return callback(false);
             }
           }

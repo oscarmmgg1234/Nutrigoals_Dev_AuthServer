@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 
 const createDefaultUserMacroGoal = (userOBJ) => {
-  const bmrWithBenedict = 0;
+  let bmrWithBenedict = 0;
   if (userOBJ.gender === "Male") {
     bmrWithBenedict =
       (

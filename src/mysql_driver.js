@@ -79,15 +79,21 @@ module.exports = class DB {
             JSONObject.user_height,
             JSONObject.fitnessLevel,
             JSONObject.weeklyLossGoal,
-            "JSON_OBJECT('value',3)"
-           ,
+            JSONcreateDefaultUserMacroGoal({
+              gender: JSONObject.gender,
+              age: JSONObject.user_age,
+              weight: JSONObject.user_weight,
+              height: JSONObject.user_height,
+              fitnessLevel: JSONObject.fitnessLevel,
+              weeklyLossGoal: JSONObject.weeklyLossGoal,
+            }),
             13,
           ],
           (err, result) => {
             if (err === null) {
               return callback(true);
             } else {
-              console.log(err)
+              console.log(err);
               return callback(false);
             }
           }

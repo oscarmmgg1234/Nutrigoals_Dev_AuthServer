@@ -79,7 +79,7 @@ module.exports = class DB {
             JSONObject.user_height,
             JSONObject.fitnessLevel,
             JSONObject.weeklyLossGoal,
-            "JSON_OBJECT('value':3)"
+            "JSON_OBJECT('value',3)"
            ,
             13,
           ],

@@ -1,10 +1,12 @@
 const mysql = require("mysql");
-const { createID, password_hash_rounds, status } = require("./utils");
+const { password_hash_rounds } = require("./constants");
+const { createDefaultUserMacroGoal } = require("./utilities");
+const { createID, status } = require("./utilities");
 const bcrypt = require("bcryptjs");
 
 module.exports = class DB {
   constructor() {
-    this.columnName = new Map()
+    this.columnName = new Map();
     this.db = mysql.createConnection({
       user: "admin",
       host: "db.ca1tiucmqwpl.us-west-2.rds.amazonaws.com",
@@ -27,30 +29,44 @@ module.exports = class DB {
     });
   }
 
-  updateUserInfo(JSONObject, callback){
+  updateUserInfo(JSONObject, callback) {
     let query = "";
-    if(JSONObject.index > 3){
-    query = `UPDATE users SET ${this.columnName.get(JSONObject.index)} = ${JSONObject.payload} WHERE user_id = '${JSONObject.userID}'`; 
+    if (JSONObject.index > 3) {
+      query = `UPDATE users SET ${this.columnName.get(JSONObject.index)} = ${
+        JSONObject.payload
+      } WHERE user_id = '${JSONObject.userID}'`;
+    } else {
+      query = `UPDATE users SET ${this.columnName.get(JSONObject.index)} = '${
+        JSONObject.payload
+      }' WHERE user_id = '${JSONObject.userID}'`;
     }
-    else{
-      query = `UPDATE users SET ${this.columnName.get(JSONObject.index)} = '${JSONObject.payload}' WHERE user_id = '${JSONObject.userID}'`;
-    }
-    this.db.query(query, (err, res) => { if (err === null) { return callback(status.success) } else { throw err } })
-
+    this.db.query(query, (err, res) => {
+      if (err === null) {
+        return callback(status.success);
+      } else {
+        throw err;
+      }
+    });
   }
   uploadImage(JSONObject, callback) {
     let query = `UPDATE users SET profile_image ='${JSONObject.image}' WHERE user_id = '${JSONObject.userID}'`;
-    this.db.query(query, (err, res) => { if (err === null) { return callback(status.success) } else { throw err } });
+    this.db.query(query, (err, res) => {
+      if (err === null) {
+        return callback(status.success);
+      } else {
+        throw err;
+      }
+    });
   }
 
   registerUser(JSONObject, callback) {
-    let database = this.db
+    let database = this.db;
     bcrypt.hash(
       JSONObject.password,
       password_hash_rounds,
       function (err, hash) {
         database.query(
-          "INSERT INTO users (user_id, user_fullname, user_email, user_password, user_username, user_gender, user_age, user_weight, user_height, user_physical_level, user_weightLossGoal) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+          "INSERT INTO users (user_id, user_fullname, user_email, user_password, user_username, user_gender, user_age, user_weight, user_height, user_physical_level, user_weightLossGoal, user_macro_goals, user_water_goal) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
           [
             createID(),
             JSONObject.fullname,
@@ -63,6 +79,15 @@ module.exports = class DB {
             JSONObject.user_height,
             JSONObject.fitnessLevel,
             JSONObject.weeklyLossGoal,
+            createDefaultUserMacroGoal({
+              gender: JSONObject.gender,
+              age: JSONObject.age,
+              weight: JSONObject.weight,
+              height: JSONObject.height,
+              fitnessLevel: JSONObject.fitnessLevel,
+              weeklyLossGoal: JSONObject.weeklyLossGoal,
+            }),
+            13,
           ],
           (err, result) => {
             if (err === null) {
@@ -108,6 +133,8 @@ module.exports = class DB {
                     height: result[0].user_height,
                     fitnessLevel: result[0].user_physical_level,
                     weeklyLossGoal: result[0].user_weightLossGoal,
+                    userGoals: result[0].user_macro_goals,
+                    waterGoal: result[0].user_water_goal,
                   });
                 } else {
                   return callback({ valid: false });
@@ -150,6 +177,8 @@ module.exports = class DB {
                     height: result[0].user_height,
                     fitnessLevel: result[0].user_physical_level,
                     weeklyLossGoal: result[0].user_weightLossGoal,
+                    userGoals: result[0].user_macro_goals,
+                    waterGoal: result[0].user_water_goal,
                   });
                 } else {
                   return callback({ valid: false });

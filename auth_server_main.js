@@ -1,7 +1,6 @@
-
 const express = require("express");
 const server = require("./src/server");
-const { listening_port, status } = require("./src/utils");
+const { listening_port, status } = require("./src/constants");
 
 const api = express();
 const Server = new server();
@@ -13,7 +12,18 @@ Server.refreshServerUserArray();
 
 api.post("/registerUser", (req, res) => {
   //check if request userObject is valid
-  if (req.body.username && req.body.email && req.body.password && req.body.gender && req.body.weight && req.body.height && req.body.age && req.body.name && req.body.fitnessLevel && req.body.weeklyLossGoal) {
+  if (
+    req.body.username &&
+    req.body.email &&
+    req.body.password &&
+    req.body.gender &&
+    req.body.weight &&
+    req.body.height &&
+    req.body.age &&
+    req.body.name &&
+    req.body.fitnessLevel &&
+    req.body.weeklyLossGoal
+  ) {
     const userOBJ = {
       fullname: req.body.name,
       email: req.body.email,
@@ -34,10 +44,8 @@ api.post("/registerUser", (req, res) => {
         res.send(status.failed);
       }
     });
-  }
-  else {
-  
-    res.send(status.failed)
+  } else {
+    res.send(status.failed);
   }
 });
 
@@ -67,10 +75,8 @@ api.post("/loginUser", (req, res) => {
         }
       }
     );
-  }
-  else {
-
-    res.send(status.invalidUserOBJ)
+  } else {
+    res.send(status.invalidUserOBJ);
   }
 });
 
@@ -78,13 +84,27 @@ api.post("/signOutUser", (req, res) => {
   Server.SignOutUserWithManager(req.body.user_id);
 });
 
-api.post('/uploadImage', (req, res) => {
-  Server.uploadImage({ userID: req.body.user_id, image: req.body.image }, (result) => { res.send(result) })
-})
+api.post("/uploadImage", (req, res) => {
+  Server.uploadImage(
+    { userID: req.body.user_id, image: req.body.image },
+    (result) => {
+      res.send(result);
+    }
+  );
+});
 
-api.post('/updateUserAccountInfo', (req,res)=>{
-  Server.updateUserInfo({index: req.body.index, payload: req.body.payload, userID: req.body.userID}, (result)=>{res.send(result)})
-})
+api.post("/updateUserAccountInfo", (req, res) => {
+  Server.updateUserInfo(
+    {
+      index: req.body.index,
+      payload: req.body.payload,
+      userID: req.body.userID,
+    },
+    (result) => {
+      res.send(result);
+    }
+  );
+});
 api.listen(listening_port, () => {
   console.log(`running server on port ${listening_port}`);
 });

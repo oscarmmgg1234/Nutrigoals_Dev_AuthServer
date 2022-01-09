@@ -1,6 +1,4 @@
-
 const DB = require("./mysql_driver");
-
 
 module.exports = class server extends DB {
   constructor() {
@@ -29,9 +27,11 @@ module.exports = class server extends DB {
     });
     return callback(obj);
   }
-  SignOutUserWithManager(user_id){
-    let newUserList = this.SignedInUsers.filter(obj=>obj.user_id !== user_id)
-    this.SignedInUsers = new Array()
+  SignOutUserWithManager(user_id) {
+    let newUserList = this.SignedInUsers.filter(
+      (obj) => obj.user_id !== user_id
+    );
+    this.SignedInUsers = new Array();
     this.SignedInUsers = newUserList;
   }
 

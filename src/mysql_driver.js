@@ -61,34 +61,24 @@ module.exports = class DB {
 
   registerUser(JSONObject, callback) {
     let database = this.db;
+    let userGoalList =   createDefaultUserMacroGoal({
+      gender: JSONObject.gender,
+      age: JSONObject.user_age,
+      weight: JSONObject.user_weight,
+      height: JSONObject.user_height,
+      fitnessLevel: JSONObject.fitnessLevel,
+      weeklyLossGoal: JSONObject.weeklyLossGoal,
+    });
     bcrypt.hash(
       JSONObject.password,
       password_hash_rounds,
       function (err, hash) {
+        let query = `INSERT INTO users (user_id, user_fullname, user_email, user_password, user_username, user_gender, user_age, user_weight, user_height, user_physical_level, user_weightLossGoal, user_macro_goals, user_water_goal)
+        VALUES (${createID()}, ${JSONObject.fullname},${JSONObject.email}, ${hash}, ${JSONObject.username}, ${JSONObject.gender}, ${JSONObject.user_age}, ${JSONObject.user_weight},
+        ${JSONObject.fitnessLevel}, ${JSONObject.weeklyLossGoal}, '{"calories":${userGoalList[0]},"proteins":${userGoalList[1]},"fats":${userGoalList[2]},"carbohydrates":${userGoalList[3]},
+       "sugars":${userGoalList[4]},"sodiums":${userGoalList[5]}}',13)`
         database.query(
-          "INSERT INTO users (user_id, user_fullname, user_email, user_password, user_username, user_gender, user_age, user_weight, user_height, user_physical_level, user_weightLossGoal, user_macro_goals, user_water_goal) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
-          [
-            createID(),
-            JSONObject.fullname,
-            JSONObject.email,
-            hash,
-            JSONObject.username,
-            JSONObject.gender,
-            JSONObject.user_age,
-            JSONObject.user_weight,
-            JSONObject.user_height,
-            JSONObject.fitnessLevel,
-            JSONObject.weeklyLossGoal,
-            createDefaultUserMacroGoal({
-              gender: JSONObject.gender,
-              age: JSONObject.user_age,
-              weight: JSONObject.user_weight,
-              height: JSONObject.user_height,
-              fitnessLevel: JSONObject.fitnessLevel,
-              weeklyLossGoal: JSONObject.weeklyLossGoal,
-            }),
-            13,
-          ],
+          query,
           (err, result) => {
             if (err === null) {
               return callback(true);

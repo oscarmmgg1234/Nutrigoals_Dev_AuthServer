@@ -12,14 +12,14 @@ const createDefaultUserMacroGoal = (userOBJ) => {
         createBenedictConstant(userOBJ.fitnessLevel)
       ).toFixed(0) + createGoalConstant(userOBJ.weeklyLossGoal);
     //35 25 40 default ratio
-    return {
-      calories: bmrWithBenedict,
-      proteins: ((0.35 * bmrWithBenedict) / 4).toFixed(0),
-      fats: ((0.25 * bmrWithBenedict) / 9).toFixed(0),
-      carbohydrates: ((0.4 * bmrWithBenedict) / 4).toFixed(0),
-      sugars: 30,
-      sodiums: 2300,
-    };
+    return [
+      bmrWithBenedict,
+      ((0.35 * bmrWithBenedict) / 4).toFixed(0),
+      ((0.25 * bmrWithBenedict) / 9).toFixed(0),
+      ((0.4 * bmrWithBenedict) / 4).toFixed(0),
+      30,
+      2300,
+    ];
   } else {
     //female
     bmrWithBenedict =
@@ -29,14 +29,14 @@ const createDefaultUserMacroGoal = (userOBJ) => {
         3.0998 * conversion_inToCm(userOBJ.height) -
         4.33 * userOBJ.age * createBenedictConstant(userOBJ.fitnessLevel)
       ).toFixed(0) + createGoalConstant(userOBJ.weeklyLossGoal);
-    return {
-      calories: bmrWithBenedict,
-      proteins: ((0.35 * bmrWithBenedict) / 4).toFixed(0),
-      fats: ((0.25 * bmrWithBenedict) / 9).toFixed(0),
-      carbohydrates: ((0.4 * bmrWithBenedict) / 4).toFixed(0),
-      sugars: 30,
-      sodiums: 2300,
-    };
+    return [
+      bmrWithBenedict,
+      ((0.35 * bmrWithBenedict) / 4).toFixed(0),
+      ((0.25 * bmrWithBenedict) / 9).toFixed(0),
+      ((0.4 * bmrWithBenedict) / 4).toFixed(0),
+      30,
+      2300,
+    ];
   }
 };
 

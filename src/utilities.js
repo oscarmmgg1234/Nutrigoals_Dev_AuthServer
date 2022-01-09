@@ -10,7 +10,7 @@ const createDefaultUserMacroGoal = (userOBJ) => {
           4.799 * conversion_inToCm(userOBJ.height) -
           5.677 * userOBJ.age) *
         createBenedictConstant(userOBJ.fitnessLevel)
-      ).toFixed(0) + createGoalConstant(userOBJ.weeklyLossGoal);
+       + createGoalConstant(userOBJ.weeklyLossGoal)).toFixed(0);
     //35 25 40 default ratio
     return [
       bmrWithBenedict,
@@ -28,7 +28,7 @@ const createDefaultUserMacroGoal = (userOBJ) => {
         9.247 * conversion_LbToKg(userOBJ.weight) +
         3.0998 * conversion_inToCm(userOBJ.height) -
         4.33 * userOBJ.age * createBenedictConstant(userOBJ.fitnessLevel)
-      ).toFixed(0) + createGoalConstant(userOBJ.weeklyLossGoal);
+      + createGoalConstant(userOBJ.weeklyLossGoal)).toFixed(0);
     return [
       bmrWithBenedict,
       ((0.35 * bmrWithBenedict) / 4).toFixed(0),

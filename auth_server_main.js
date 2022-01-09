@@ -1,6 +1,7 @@
 const express = require("express");
 const server = require("./src/server");
 const { listening_port, status } = require("./src/constants");
+const { createDefaultUserMacroGoal } = require("./src/utilities");
 
 const api = express();
 const Server = new server();

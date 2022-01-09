@@ -75,7 +75,8 @@ module.exports = class DB {
       function (err, hash) {
         let query = `INSERT INTO users (user_id, user_fullname, user_email, user_password, user_username, user_gender, user_age, user_weight, user_height, user_physical_level, user_weightLossGoal, user_macro_goals, user_water_goal)
         VALUES (${createID()}, ${JSONObject.fullname},${JSONObject.email}, ${hash}, ${JSONObject.username}, ${JSONObject.gender}, ${JSONObject.user_age}, ${JSONObject.user_weight},
-        ${JSONObject.fitnessLevel}, ${JSONObject.weeklyLossGoal}, '{"value":3}',13)`
+        ${JSONObject.fitnessLevel}, ${JSONObject.weeklyLossGoal}, '{"calories":"${userGoalList[0]},"proteins":${userGoalList[1]},"fats":${userGoalList[2]},"carbohydrates":${userGoalList[3]},
+       "sugars":${userGoalList[4]},"sodiums":${userGoalList[5]}}',13)`
         database.query(
           query,
           (err, result) => {

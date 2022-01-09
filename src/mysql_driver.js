@@ -79,7 +79,7 @@ module.exports = class DB {
             JSONObject.user_height,
             JSONObject.fitnessLevel,
             JSONObject.weeklyLossGoal,
-            JSONcreateDefaultUserMacroGoal({
+            createDefaultUserMacroGoal({
               gender: JSONObject.gender,
               age: JSONObject.user_age,
               weight: JSONObject.user_weight,

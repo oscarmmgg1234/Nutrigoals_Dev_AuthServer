@@ -66,7 +66,7 @@ module.exports = class DB {
       password_hash_rounds,
       function (err, hash) {
         database.query(
-          "INSERT INTO users (user_id, user_fullname, user_email, user_password, user_username, user_gender, user_age, user_weight, user_height, user_physical_level, user_weightLossGoal, user_macro_goals, user_water_goal) VALUES (?,?,?,?,?,?,?,?,?,?,?,'?',?)",
+          "INSERT INTO users (user_id, user_fullname, user_email, user_password, user_username, user_gender, user_age, user_weight, user_height, user_physical_level, user_weightLossGoal, user_macro_goals, user_water_goal) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
           [
             createID(),
             JSONObject.fullname,
@@ -79,14 +79,8 @@ module.exports = class DB {
             JSONObject.user_height,
             JSONObject.fitnessLevel,
             JSONObject.weeklyLossGoal,
-            createDefaultUserMacroGoal({
-              gender: JSONObject.gender,
-              age: JSONObject.age,
-              weight: JSONObject.weight,
-              height: JSONObject.height,
-              fitnessLevel: JSONObject.fitnessLevel,
-              weeklyLossGoal: JSONObject.weeklyLossGoal,
-            }),
+            "JSON_OBJECT('value':3)"
+           ,
             13,
           ],
           (err, result) => {

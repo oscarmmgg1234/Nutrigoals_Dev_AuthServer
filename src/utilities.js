@@ -3,14 +3,14 @@ const { v4: uuidv4 } = require("uuid");
 const createDefaultUserMacroGoal = (userOBJ) => {
   let bmrWithBenedict = 0;
   if (userOBJ.gender === "Male") {
-    bmrWithBenedict =
-      (
-        (88.362 +
-          13.397 * conversion_LbToKg(userOBJ.weight) +
-          4.799 * conversion_inToCm(userOBJ.height) -
-          5.677 * userOBJ.age) *
-        createBenedictConstant(userOBJ.fitnessLevel)
-       + createGoalConstant(userOBJ.weeklyLossGoal)).toFixed(0);
+    bmrWithBenedict = (
+      (88.362 +
+        13.397 * conversion_LbToKg(userOBJ.weight) +
+        4.799 * conversion_inToCm(userOBJ.height) -
+        5.677 * userOBJ.age) *
+        createBenedictConstant(userOBJ.fitnessLevel) +
+      createGoalConstant(userOBJ.weeklyLossGoal)
+    ).toFixed(0);
     //35 25 40 default ratio
     return [
       bmrWithBenedict,
@@ -22,13 +22,13 @@ const createDefaultUserMacroGoal = (userOBJ) => {
     ];
   } else {
     //female
-    bmrWithBenedict =
-      (
-        447.593 +
-        9.247 * conversion_LbToKg(userOBJ.weight) +
-        3.0998 * conversion_inToCm(userOBJ.height) -
-        4.33 * userOBJ.age * createBenedictConstant(userOBJ.fitnessLevel)
-      + createGoalConstant(userOBJ.weeklyLossGoal)).toFixed(0);
+    bmrWithBenedict = (
+      447.593 +
+      9.247 * conversion_LbToKg(userOBJ.weight) +
+      3.0998 * conversion_inToCm(userOBJ.height) -
+      4.33 * userOBJ.age * createBenedictConstant(userOBJ.fitnessLevel) +
+      createGoalConstant(userOBJ.weeklyLossGoal)
+    ).toFixed(0);
     return [
       bmrWithBenedict,
       ((0.35 * bmrWithBenedict) / 4).toFixed(0),
@@ -54,7 +54,7 @@ const createBenedictConstant = (input) => {
   }
 };
 
-const createGoalConstant = (input) => {
+const createGoalConstant = () => {
   if (input === 1) {
     return -1000;
   } else if (input === 2) {
@@ -66,6 +66,10 @@ const createGoalConstant = (input) => {
   } else if (input === 5) {
     return 1000;
   }
+};
+
+const conversion_MacroToCalorie = (protein, fat, carbs) => {
+  return protein * 4 + fat * 9 + carbs * 4;
 };
 
 const conversion_LbToKg = (input) => {
@@ -87,4 +91,9 @@ function createID() {
   return uuidv4();
 }
 
-module.exports = { createID, status, createDefaultUserMacroGoal };
+module.exports = {
+  createID,
+  status,
+  createDefaultUserMacroGoal,
+  conversion_MacroToCalorie,
+};

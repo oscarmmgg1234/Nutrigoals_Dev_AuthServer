@@ -1,6 +1,9 @@
 const mysql = require("mysql");
 const { password_hash_rounds } = require("./constants");
-const { createDefaultUserMacroGoal } = require("./utilities");
+const {
+  createDefaultUserMacroGoal,
+  conversion_MacroToCalorie,
+} = require("./utilities");
 const { createID, status } = require("./utilities");
 const bcrypt = require("bcryptjs");
 
@@ -26,6 +29,32 @@ module.exports = class DB {
     this.columnName.set(7, "user_height");
     this.db.connect((err) => {
       if (err !== null) throw err;
+    });
+  }
+
+  updateWaterGoals(JSONObject) {
+    let query = `UPDATE users SET user_water_goal = ${JSONObject.water} WHERE user_id = '${JSONObject.userID}'`;
+    this.db.query(query, (err, res) => {
+      if (err !== null) {
+        throw err;
+      }
+    });
+  }
+
+  updateMacroGoals(JSONObject) {
+    let query = `UPDATE users SET user_macro_goals = '{"calories": ${conversion_MacroToCalorie(
+      JSONObject.protein,
+      JSONObject.fat,
+      JSONObject.carbohydrate
+    )}, "proteins": ${JSONObject.protein}, "fats": ${
+      JSONObject.fat
+    }, "carbohydrates": ${JSONObject.carbohydrate}, "sugar":${
+      JSONObject.sugar
+    }, "sodium":${JSONObject.sodium}}' WHERE user_id = '${JSONObject.userID}'`;
+    this.db.query(query, (err, res) => {
+      if (err !== null) {
+        throw err;
+      }
     });
   }
 

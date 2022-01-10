@@ -1,7 +1,7 @@
 const express = require("express");
 const server = require("./src/server");
-const { listening_port} = require("./src/constants");
-const {status } = require("./src/utilities");
+const { listening_port } = require("./src/constants");
+const { status } = require("./src/utilities");
 
 const api = express();
 const Server = new server();
@@ -106,6 +106,17 @@ api.post("/updateUserAccountInfo", (req, res) => {
     }
   );
 });
+
+api.post("/updateMacroGoals", (req, res) => {
+  Server.updateMacroGoals(req.body);
+  res.send(status.success)
+});
+
+api.post("/updateWaterGoals", (req,res)=>{ 
+Server.updateWaterGoals(req.body);
+res.send(status.success)
+})
+
 api.listen(listening_port, () => {
   console.log(`running server on port ${listening_port}`);
 });

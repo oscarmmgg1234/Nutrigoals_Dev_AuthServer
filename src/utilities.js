@@ -54,7 +54,7 @@ const createBenedictConstant = (input) => {
   }
 };
 
-const createGoalConstant = () => {
+const createGoalConstant = (input) => {
   if (input === 1) {
     return -1000;
   } else if (input === 2) {

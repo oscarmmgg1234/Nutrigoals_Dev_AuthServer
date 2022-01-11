@@ -117,6 +117,8 @@ Server.updateWaterGoals(req.body);
 res.send(status.success)
 })
 
+
 api.listen(listening_port, () => {
   console.log(`running server on port ${listening_port}`);
 });
+

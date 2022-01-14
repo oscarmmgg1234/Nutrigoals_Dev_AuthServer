@@ -77,7 +77,7 @@ module.exports = class DB {
       }
     });
   }
-  uploadImage(JSONObject, callback) {
+  uploadImageHandler(JSONObject, callback) {
     let query = `UPDATE users SET profile_image ='${JSONObject.image}' WHERE user_id = '${JSONObject.userID}'`;
     this.db.query(query, (err, res) => {
       if (err === null) {

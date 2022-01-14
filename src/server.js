@@ -41,5 +41,12 @@ module.exports = class server extends DB {
     }, 8640000);
   }
 
+  uploadImage(JSONObject, callback){
+    let ifUserInManager = this.SignedInUsers.map((obj, index)=>{if(obj.user_id === JSONObject.userID){return {...obj, ind: index}}})
+    if(ifUserInManager.length > 0){
+      this.SignedInUsers[ifUserInManager[0].ind] = {...this.SignedInUsers[ifUserInManager[0].ind], image: JSONObject.image};
+    }
+    this.uploadImageHandler(JSONObject,(res)=>{return callback(res)})
+  }
   //signInManger coming soon
 };

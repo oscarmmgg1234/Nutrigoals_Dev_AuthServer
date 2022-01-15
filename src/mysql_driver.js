@@ -168,7 +168,7 @@ module.exports = class DB {
                     weeklyLossGoal: result[0].user_weightLossGoal,
                     userGoals: result[0].user_macro_goals,
                     waterGoal: result[0].user_water_goal,
-                  }, {user_id: result[0].user_id, device_ip: JSONObject.device_ip});
+                  })
                 } else {
                   return callback({ valid: false });
                 }
@@ -212,7 +212,7 @@ module.exports = class DB {
                     weeklyLossGoal: result[0].user_weightLossGoal,
                     userGoals: result[0].user_macro_goals,
                     waterGoal: result[0].user_water_goal,
-                  }, {user_id: result[0].user_id, device_ip: JSONObject.device_ip});
+                  });
                 } else {
                   return callback({ valid: false });
                 }

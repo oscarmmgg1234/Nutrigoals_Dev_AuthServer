@@ -5,22 +5,9 @@ module.exports = class server extends DB {
   constructor() {
     super();
     this.SignedInUsers = [];
-    this.registered_devices = [];
   }
 
-  RegisterDevice(userOBJ){
-    var counter = 0; 
-    this.registered_devices.map((obj)=>{
-      if(obj.device_ip === userOBJ.device_ip){
-        counter = 1
-      }
-    })
-    if(counter === 0){
-      this.registered_devices.push(userOBJ);
-    }
 
-
-  }
   SignInUser(JSONObject) {
     var counter = 0;
     this.SignedInUsers.map((obj) => {
@@ -57,19 +44,6 @@ module.exports = class server extends DB {
     }, 8640000);
   }
 
-  client_init(ip, callback){
-    
-    let result = this.registered_devices.map((obj)=>{if(obj.device_ip === ip){return obj}})
-    if(result.length > 0){
-      let subResult = this.SignedInUsers.map((obj)=>{if(obj.user_id === result[0].user_id){return obj;}})
-      if(subResult.length > 0){
-        return callback(subResult[0]);
-      }
-    }
-    else{
-      return callback(status.failed);
-    }
-  }
 
   uploadImage(JSONObject, callback){
     let ifUserInManager = this.SignedInUsers.map((obj, index)=>{if(obj.user_id === JSONObject.userID){return {...obj, ind: index}}})

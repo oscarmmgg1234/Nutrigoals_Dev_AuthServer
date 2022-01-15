@@ -51,7 +51,6 @@ api.post("/registerUser", (req, res) => {
 });
 
 api.post("/clientInit", (req,res)=>{
-  console.log(req.ip);
   Server.client_init(req.ip, (result)=>{res.send(result)})
 })
 

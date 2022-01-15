@@ -2,6 +2,7 @@ const express = require("express");
 const server = require("./src/server");
 const { listening_port } = require("./src/constants");
 const { status } = require("./src/utilities");
+const req = require("express/lib/request");
 
 const api = express();
 const Server = new server();
@@ -123,6 +124,9 @@ Server.updateWaterGoals(req.body);
 res.send(status.success)
 })
 
+api.post("/timing",(req,res)=>{
+  res.send(status.succeded);
+})
 
 api.listen(listening_port, () => {
   console.log(`running server on port ${listening_port}`);

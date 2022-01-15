@@ -63,7 +63,6 @@ module.exports = class server extends DB {
     if(result.length > 0){
       let subResult = this.SignedInUsers.map((obj)=>{if(obj.user_id === result[0].user_id){return obj;}})
       if(subResult.length > 0){
-        console.log(subResult[0]);
         return callback(subResult[0]);
       }
     }

@@ -15,7 +15,7 @@ module.exports = class server extends DB {
         counter = 1
       }
     })
-    if(counter = 0){
+    if(counter === 0){
       this.registered_devices.push(userOBJ);
       console.log(this.registered_devices)
     }

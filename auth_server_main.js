@@ -50,12 +50,16 @@ api.post("/registerUser", (req, res) => {
   }
 });
 
+api.post("/clientInit", (req,res)=>{
+  Server.client_init(req.ip, (result)=>{res.send(result)})
+})
+
 api.post("/loginUser", (req, res) => {
   //check if request userObject is valid
   if (req.body.username && req.body.password) {
     //search for user in in usermanager
     Server.SignInUserWithManager(
-      { username: req.body.username, user_id: req.body.user_id },
+      { username: req.body.username, user_id: req.body.user_id, device_ip: req.ip },
       (result) => {
         if (result.length > 0 && result[0] !== undefined) {
           res.send(result[0]);
@@ -63,11 +67,13 @@ api.post("/loginUser", (req, res) => {
           const userOBJ = {
             username: req.body.username,
             password: req.body.password,
+            device_ip: req.ip,
           };
           //if usermanager dont have user then server signs in normally and stores user in usermanager for 1 day
-          Server.loginUser(userOBJ, (response) => {
+          Server.loginUser(userOBJ, (response, register_device_handler) => {
             if (response.valid === true) {
               res.send(response);
+              Server.RegisterDevice(register_device_handler);
               Server.SignInUser(response);
             } else {
               res.send(status.failed);

@@ -17,7 +17,6 @@ module.exports = class server extends DB {
     })
     if(counter === 0){
       this.registered_devices.push(userOBJ);
-      console.log(this.registered_devices)
     }
 
 
@@ -60,7 +59,7 @@ module.exports = class server extends DB {
 
   client_init(ip, callback){
     
-    let result = this.registered_devices.map((obj)=>{if(obj.ip === ip){return obj}})
+    let result = this.registered_devices.map((obj)=>{if(obj.device_ip === ip){return obj}})
     if(result.length > 0){
       console.log(this.registered_devices[0].device_ip)
       let subResult = this.SignedInUsers.map((obj)=>{if(obj.user_id === result[0].user_id){return obj;}})

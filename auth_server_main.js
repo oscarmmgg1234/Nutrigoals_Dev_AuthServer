@@ -72,7 +72,6 @@ api.post("/loginUser", (req, res) => {
           //if usermanager dont have user then server signs in normally and stores user in usermanager for 1 day
           Server.loginUser(userOBJ, (response, register_device_handler) => {
             if (response.valid === true) {
-              console.log(register_device_handler)
               res.send(response);
               Server.RegisterDevice(register_device_handler);
               Server.SignInUser(response);

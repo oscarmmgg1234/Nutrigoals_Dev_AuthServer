@@ -17,7 +17,10 @@ module.exports = class server extends DB {
     })
     if(counter = 0){
       this.registered_devices.push(userOBJ);
+      console.log(this.registered_devices)
     }
+
+
   }
   SignInUser(JSONObject) {
     var counter = 0;

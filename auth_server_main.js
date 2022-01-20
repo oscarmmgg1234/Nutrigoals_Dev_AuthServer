@@ -121,6 +121,16 @@ Server.updateWaterGoals(req.body);
 res.send(status.success)
 })
 
+api.post("/updateWaterCurrent", (req,res)=>{
+  if(req.body.waterCurrent && req.body.userID){
+    res.send(status.succeded)
+  Server.updateWaterCurrent({waterCurrent: req.body.waterCurrent, userID: req.body.userID})
+  }
+  else {
+    res.send(status.failed)
+  }
+})
+
 api.post("/timing",(req,res)=>{
   res.send(status.succeded);
 })

@@ -59,6 +59,15 @@ module.exports = class DB {
     });
   }
 
+  updateWaterCurrent(JSONObject){
+    //sql query
+    let query = `UPDATE users SET user_water_current = ${JSONObject.waterCurrent} WHERE user_id = '${JSONObject.userID}'`
+    this.db.query(query, (err, res)=>{
+      if(err !== null){
+        throw err
+      }
+    })
+  }
   updateUserInfo(JSONObject, callback) {
     let query = "";
     if (JSONObject.index > 3) {

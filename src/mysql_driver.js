@@ -9,7 +9,6 @@ const bcrypt = require("bcryptjs");
 
 module.exports = class DB {
   constructor() {
-    
     this.columnName = new Map();
     this.db = mysql.createConnection({
       user: "admin",
@@ -59,14 +58,14 @@ module.exports = class DB {
     });
   }
 
-  updateWaterCurrent(JSONObject){
+  updateWaterCurrent(JSONObject) {
     //sql query
-    let query = `UPDATE users SET user_water_current = ${JSONObject.waterCurrent} WHERE user_id = '${JSONObject.userID}'`
-    this.db.query(query, (err, res)=>{
-      if(err !== null){
-        throw err
+    let query = `UPDATE users SET user_water_current = ${JSONObject.waterCurrent} WHERE user_id = '${JSONObject.userID}'`;
+    this.db.query(query, (err, res) => {
+      if (err !== null) {
+        throw err;
       }
-    })
+    });
   }
   updateUserInfo(JSONObject, callback) {
     let query = "";
@@ -177,7 +176,8 @@ module.exports = class DB {
                     weeklyLossGoal: result[0].user_weightLossGoal,
                     userGoals: result[0].user_macro_goals,
                     waterGoal: result[0].user_water_goal,
-                  })
+                    waterCurrent: result[0].user_water_current,
+                  });
                 } else {
                   return callback({ valid: false });
                 }
@@ -221,6 +221,7 @@ module.exports = class DB {
                     weeklyLossGoal: result[0].user_weightLossGoal,
                     userGoals: result[0].user_macro_goals,
                     waterGoal: result[0].user_water_goal,
+                    waterCurrent: result[0].user_water_current,
                   });
                 } else {
                   return callback({ valid: false });

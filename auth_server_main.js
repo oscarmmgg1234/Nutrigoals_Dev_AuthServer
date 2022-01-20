@@ -50,16 +50,18 @@ api.post("/registerUser", (req, res) => {
   }
 });
 
-api.post("/clientInit", (req,res)=>{
-  Server.client_init(req.ip, (result)=>{res.send(result)})
-})
+api.post("/clientInit", (req, res) => {
+  Server.client_init(req.ip, (result) => {
+    res.send(result);
+  });
+});
 
 api.post("/loginUser", (req, res) => {
   //check if request userObject is valid
   if (req.body.username && req.body.password) {
     //search for user in in usermanager
     Server.SignInUserWithManager(
-      { username: req.body.username, user_id: req.body.user_id,},
+      { username: req.body.username, user_id: req.body.user_id },
       (result) => {
         if (result.length > 0 && result[0] !== undefined) {
           res.send(result[0]);
@@ -113,29 +115,32 @@ api.post("/updateUserAccountInfo", (req, res) => {
 
 api.post("/updateMacroGoals", (req, res) => {
   Server.updateMacroGoals(req.body);
-  res.send(status.success)
+  res.send(status.success);
 });
 
-api.post("/updateWaterGoals", (req,res)=>{ 
-Server.updateWaterGoals(req.body);
-res.send(status.success)
-})
+api.post("/updateWaterGoals", (req, res) => {
+  Server.updateWaterGoals(req.body);
+  res.send(status.success);
+});
 
-api.post("/updateWaterCurrent", (req,res)=>{
-  if(req.body.waterCurrent && req.body.userID){
-    res.send(status.succeded)
-  Server.updateWaterCurrent({waterCurrent: req.body.waterCurrent, userID: req.body.userID})
-  }
-  else {
-    res.send(status.failed)
-  }
-})
+api.post("/updateWaterCurrent", (req, res) => {
 
-api.post("/timing",(req,res)=>{
+  if (req.body.waterCurrent && req.body.userID ) {
+    
+    Server.updateWaterCurrent({
+      waterCurrent: req.body.waterCurrent,
+      userID: req.body.userID,
+    });
+    res.send(status.succeded);
+  } else {
+    res.send(status.failed);
+  }
+});
+
+api.post("/timing", (req, res) => {
   res.send(status.succeded);
-})
+});
 
 api.listen(listening_port, () => {
   console.log(`running server on port ${listening_port}`);
 });
-
